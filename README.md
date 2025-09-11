@@ -1,4 +1,5 @@
 # EX01 Developing a Simple Webserver
+## Date:
 
 ## AIM:
 To develop a simple webserver to serve html pages and display the list of protocols in TCP/IP Protocol Suite.
@@ -35,28 +36,51 @@ Start the server script and check for errors.
 Open a browser and navigate to http://127.0.0.1:8000 (or the assigned port).
 
 ## PROGRAM:
-```
+
+from http.server import HTTPServer, BaseHTTPRequestHandler
+
+content = '''
 <!doctype html>
 <html>
 <head>
 <title> My Web Server</title>
 </head>
 <body>
-<h1>
-    <table align="center" border="1" bgcolor="pink" cellpadding="10">
-        <caption>LIST OF PROTOCOL IN TCP/IP PROTOCOLSUITE </caption>
-        <tr><th>S.No</th><th>Name of the Layer</th><th>Name of the prototype</th></tr>
-        <tr><td>1</td><td>Application Layer</td><td>HTTP,FTP,DNS,Telnet & SS</td></tr>
-        <tr><td>2</td><td>Transport Layer</td><td>TCP & UDP</td></tr>
-        <tr><td>3</td><td>Network Layer</td><td>IPV4/IPV6</td></tr>
-        <tr><td>4</td><td>Link Layer</td><td>Ethernet</td></tr>
-    </table>
-</h1>
+  <center><font color="blue" face="Times new roman" size="99">
+        <b>Lists of protocols in TCP/IP Model</b>
+        </font></center>
+        <font color="red">
+        <h2>Application Layer - HTTP, FTP, DNS, Telnet<br>
+        Transport Layer - TCP & UDP<br>
+        Network Type - IPV4/TPV6<br>
+        Link Layer - Ethernet/h2>
+        </font>
 </body>
-</html>
-```
-## OUTPUT:
+</html>'''
 
-![alt text](<exp 1 screenshot.png>)
+class MyServer(BaseHTTPRequestHandler):
+    def do_GET(self):
+        print("Get request received...")
+        self.send_response(200) 
+        self.send_header("content-type", "text/html")       
+        self.end_headers()
+        self.wfile.write(content.encode())
+
+print("This is my webserver") 
+server_address =('',6600)
+httpd = HTTPServer(server_address,MyServer)
+httpd.serve_forever()
+
+
+
+
+
+## OUTPUT:
+<img width="1242" height="787" alt="Screenshot 2025-08-31 215053" src="https://github.com/user-attachments/assets/c1d2682f-4966-4cba-9289-6d00a1c681f0" />
+<img width="944" height="357" alt="Screenshot 2025-08-31 215102" src="https://github.com/user-attachments/assets/7fbfebf6-e3c7-44fb-b3e0-ea86642cec73" />
+<img width="1914" height="521" alt="Screenshot 2025-08-31 215200" src="https://github.com/user-attachments/assets/04ca5a96-8c75-4ec1-8dc2-cf93386aea47" />
+
+
+
 ## RESULT:
 The program for implementing simple webserver is executed successfully.
